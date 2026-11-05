@@ -8,583 +8,430 @@
 <title>RAZCAR.AM — Build Your Own Legend</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+background:#101113;
+color:#fff;
+font-family:Arial,Helvetica,sans-serif;
+overflow-x:hidden
 }
 
-html { scroll-behavior: smooth; }
-
-body {
-  background: #101113;
-  color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
+/* LOADER */
+.loader{
+position:fixed;
+inset:0;
+z-index:1000;
+background:#101113;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+transition:opacity 1s ease,visibility 1s ease
 }
-
-/* LOADING SCREEN */
-
-.loader {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background: #101113;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 1s ease, visibility 1s ease;
+.loader.hide{opacity:0;visibility:hidden}
+.wheel{
+width:100px;
+height:100px;
+border:5px solid #303135;
+border-top-color:#e33b35;
+border-right-color:#e33b35;
+border-radius:50%;
+animation:spin 1s linear infinite;
+position:relative
 }
-
-.loader.hide {
-  opacity: 0;
-  visibility: hidden;
+.wheel:after{
+content:"";
+position:absolute;
+inset:15px;
+border:2px solid #777;
+border-radius:50%
 }
-
-.wheel {
-  width: 100px;
-  height: 100px;
-  border: 5px solid #303135;
-  border-top-color: #e33b35;
-  border-right-color: #e33b35;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  position: relative;
+.wheel-center{
+position:absolute;
+width:15px;
+height:15px;
+background:#e33b35;
+border-radius:50%;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%)
 }
-
-.wheel::after {
-  content: "";
-  position: absolute;
-  inset: 15px;
-  border: 2px solid #777;
-  border-radius: 50%;
+.loader-logo{
+margin-top:30px;
+font-size:24px;
+font-weight:900;
+letter-spacing:5px
 }
-
-.wheel-center {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  background: #e33b35;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.loader-logo span{color:#e33b35}
+.loader-text{
+margin-top:14px;
+color:#777;
+font-size:9px;
+letter-spacing:4px
 }
-
-.loader-logo {
-  margin-top: 30px;
-  font-size: 24px;
-  font-weight: 900;
-  letter-spacing: 5px;
+.loading-line{
+width:130px;
+height:2px;
+background:#333;
+margin-top:25px;
+overflow:hidden
 }
-
-.loader-logo span { color: #e33b35; }
-
-.loader-text {
-  margin-top: 14px;
-  color: #777;
-  font-size: 9px;
-  letter-spacing: 4px;
+.loading-line:after{
+content:"";
+display:block;
+width:45%;
+height:100%;
+background:#e33b35;
+animation:loading 1.5s ease-in-out infinite
 }
-
-.loading-line {
-  width: 130px;
-  height: 2px;
-  background: #333;
-  margin-top: 25px;
-  overflow: hidden;
-}
-
-.loading-line::after {
-  content: "";
-  display: block;
-  width: 45%;
-  height: 100%;
-  background: #e33b35;
-  animation: loading 1.5s ease-in-out infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes loading {
-  from { transform: translateX(-120%); }
-  to { transform: translateX(230%); }
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes loading{
+from{transform:translateX(-120%)}
+to{transform:translateX(230%)}
 }
 
 /* INTRO */
-
-.intro {
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-  background: #101113;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: 1s ease;
+.intro{
+position:fixed;
+inset:0;
+z-index:900;
+background:#101113;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+opacity:0;
+visibility:hidden;
+transition:1s ease
 }
-
-.intro.show {
-  opacity: 1;
-  visibility: visible;
+.intro.show{opacity:1;visibility:visible}
+.intro.hide{opacity:0;visibility:hidden}
+.intro h2{
+font-size:clamp(35px,8vw,75px);
+font-weight:900;
+letter-spacing:-3px;
+text-align:center
 }
-
-.intro.hide {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.intro h2 {
-  font-size: clamp(35px, 8vw, 75px);
-  font-weight: 900;
-  letter-spacing: -3px;
-  text-align: center;
-}
-
-.intro h2 span { color: #e33b35; }
-
-.intro p {
-  color: #888;
-  margin-top: 18px;
-  font-size: 10px;
-  letter-spacing: 5px;
-  text-align: center;
+.intro h2 span{color:#e33b35}
+.intro p{
+color:#888;
+margin-top:18px;
+font-size:10px;
+letter-spacing:5px;
+text-align:center
 }
 
 /* HEADER */
-
-header {
-  height: 85px;
-  padding: 0 7%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 10;
-  border-bottom: 1px solid #ffffff18;
+header{
+height:85px;
+padding:0 7%;
+position:absolute;
+top:0;
+left:0;
+width:100%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+z-index:10;
+border-bottom:1px solid #ffffff18
 }
-
-.logo {
-  font-size: 25px;
-  font-weight: 900;
-  letter-spacing: 2px;
+.logo{
+font-size:25px;
+font-weight:900;
+letter-spacing:2px
 }
-
-.logo span { color: #e33b35; }
-
-nav {
-  display: flex;
-  gap: 35px;
+.logo span{color:#e33b35}
+nav{display:flex;gap:35px}
+nav a{
+text-decoration:none;
+color:#ddd;
+font-size:10px;
+letter-spacing:2px;
+transition:.3s
 }
-
-nav a {
-  text-decoration: none;
-  color: #ddd;
-  font-size: 10px;
-  letter-spacing: 2px;
-  transition: .3s;
-}
-
-nav a:hover { color: #e33b35; }
+nav a:hover{color:#e33b35}
 
 /* HERO */
-
-.hero {
-  min-height: 100vh;
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  background: #171819;
+.hero{
+min-height:100vh;
+position:relative;
+display:flex;
+align-items:center;
+overflow:hidden;
+background:#171819
 }
-
-.hero-image {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg,
-      #101113 0%,
-      #101113dd 28%,
-      #10111355 65%,
-      #10111355 100%),
-    linear-gradient(0deg, #101113 0%, transparent 35%),
-    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=2200")
-    center 55% / cover no-repeat;
-  animation: cinematic 18s ease-in-out infinite alternate;
+.hero-image{
+position:absolute;
+inset:0;
+background:
+linear-gradient(90deg,#101113 0%,#101113dd 28%,#10111355 65%,#10111355 100%),
+linear-gradient(0deg,#101113 0%,transparent 35%),
+url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=2200") center 55%/cover no-repeat;
+animation:cinematic 18s ease-in-out infinite alternate
 }
-
-@keyframes cinematic {
-  from { transform: scale(1); }
-  to { transform: scale(1.09); }
+@keyframes cinematic{
+from{transform:scale(1)}
+to{transform:scale(1.09)}
 }
-
-.hero::before {
-  content: "RAZCAR";
-  position: absolute;
-  top: 22%;
-  left: 5%;
-  font-size: clamp(100px, 20vw, 280px);
-  font-weight: 900;
-  letter-spacing: -15px;
-  color: #fff;
-  opacity: .045;
-  white-space: nowrap;
+.hero:before{
+content:"RAZCAR";
+position:absolute;
+top:22%;
+left:5%;
+font-size:clamp(100px,20vw,280px);
+font-weight:900;
+letter-spacing:-15px;
+color:#fff;
+opacity:.045;
+white-space:nowrap
 }
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 140px 8%;
-  max-width: 850px;
-  animation: appear 1.5s ease both;
+.hero-content{
+position:relative;
+z-index:2;
+padding:140px 8%;
+max-width:850px;
+animation:appear 1.5s ease both
 }
-
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(35px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes appear{
+from{opacity:0;transform:translateY(35px)}
+to{opacity:1;transform:translateY(0)}
 }
-
-.eyebrow {
-  color: #e33b35;
-  font-size: 10px;
-  letter-spacing: 5px;
-  margin-bottom: 30px;
+.eyebrow{
+color:#e33b35;
+font-size:10px;
+letter-spacing:5px;
+margin-bottom:30px
 }
-
-h1 {
-  font-size: clamp(55px, 9vw, 115px);
-  font-weight: 900;
-  line-height: .92;
-  letter-spacing: -6px;
+h1{
+font-size:clamp(55px,9vw,115px);
+font-weight:900;
+line-height:.92;
+letter-spacing:-6px
 }
-
-h1 span {
-  color: #d0d0cd;
+h1 span{color:#d0d0cd}
+.description{
+color:#aaa;
+font-size:14px;
+line-height:1.9;
+max-width:420px;
+margin-top:30px
 }
-
-.description {
-  color: #aaa;
-  font-size: 14px;
-  line-height: 1.9;
-  max-width: 420px;
-  margin-top: 30px;
+.explore{
+display:inline-block;
+margin-top:35px;
+padding:17px 30px;
+background:#e33b35;
+color:white;
+text-decoration:none;
+font-size:10px;
+font-weight:bold;
+letter-spacing:2px;
+transition:.3s
 }
-
-.explore {
-  display: inline-block;
-  margin-top: 35px;
-  padding: 17px 30px;
-  background: #e33b35;
-  color: white;
-  text-decoration: none;
-  font-size: 10px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  transition: .3s;
-}
-
-.explore:hover {
-  background: white;
-  color: #111;
-}
+.explore:hover{background:white;color:#111}
 
 /* FEATURES */
-
-.section {
-  padding: 110px 8%;
-  background: #171819;
+.section{
+padding:110px 8%;
+background:#171819
 }
-
-.section-label {
-  color: #e33b35;
-  font-size: 10px;
-  letter-spacing: 5px;
-  margin-bottom: 25px;
+.section-label{
+color:#e33b35;
+font-size:10px;
+letter-spacing:5px;
+margin-bottom:25px
 }
-
-.section h2 {
-  font-size: clamp(35px, 6vw, 65px);
-  letter-spacing: -3px;
-  margin-bottom: 65px;
+.section h2{
+font-size:clamp(35px,6vw,65px);
+letter-spacing:-3px;
+margin-bottom:65px
 }
-
-.features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+.features{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:40px
 }
-
-.feature {
-  padding-top: 25px;
-  border-top: 1px solid #444;
-  transition: .3s;
+.feature{
+padding-top:25px;
+border-top:1px solid #444;
+transition:.3s
 }
-
-.feature:hover {
-  border-color: #e33b35;
-  transform: translateY(-5px);
+.feature:hover{
+border-color:#e33b35;
+transform:translateY(-5px)
 }
-
-.feature small {
-  color: #e33b35;
-  letter-spacing: 3px;
-  font-size: 10px;
+.feature small{
+color:#e33b35;
+letter-spacing:3px;
+font-size:10px
 }
-
-.feature h3 {
-  font-size: 21px;
-  margin: 22px 0 15px;
+.feature h3{
+font-size:21px;
+margin:22px 0 15px
 }
-
-.feature p {
-  color: #888;
-  font-size: 13px;
-  line-height: 1.9;
+.feature p{
+color:#888;
+font-size:13px;
+line-height:1.9
 }
 
 /* ABOUT */
-
-.about {
-  padding: 110px 8%;
-  background: #101113;
+.about{
+padding:110px 8%;
+background:#101113
 }
-
-.about h2 {
-  font-size: clamp(35px, 6vw, 65px);
-  letter-spacing: -3px;
-  margin-bottom: 30px;
+.about h2{
+font-size:clamp(35px,6vw,65px);
+letter-spacing:-3px;
+margin-bottom:30px
 }
-
-.about p {
-  color: #999;
-  max-width: 650px;
-  font-size: 15px;
-  line-height: 2;
+.about p{
+color:#999;
+max-width:650px;
+font-size:15px;
+line-height:2
 }
 
 /* FOOTER */
-
-footer {
-  padding: 35px 8%;
-  border-top: 1px solid #333;
-  display: flex;
-  justify-content: space-between;
-  color: #777;
-  font-size: 10px;
-  letter-spacing: 2px;
+footer{
+padding:35px 8%;
+border-top:1px solid #333;
+display:flex;
+justify-content:space-between;
+color:#777;
+font-size:10px;
+letter-spacing:2px
 }
 
 /* MOBILE */
-
-@media(max-width:700px) {
-  header {
-    height: 70px;
-    padding: 0 5%;
-  }
-
-  .logo { font-size: 21px; }
-
-  nav { gap: 15px; }
-
-  nav a {
-    font-size: 9px;
-    letter-spacing: 1px;
-  }
-
-  .hero { min-height: 100vh; }
-
-  .hero-image {
-    background-position: 60% center;
-    opacity: .85;
-  }
-
-  .hero-content { padding: 130px 7%; }
-
-  h1 {
-    font-size: clamp(52px, 12vw, 75px);
-    letter-spacing: -3px;
-  }
-
-  .hero::before {
-    top: 30%;
-    letter-spacing: -5px;
-  }
-
-  .features {
-    grid-template-columns: 1fr;
-    gap: 45px;
-  }
-
-  footer {
-    flex-direction: column;
-    gap: 15px;
-  }
+@media(max-width:700px){
+header{height:70px;padding:0 5%}
+.logo{font-size:21px}
+nav{gap:15px}
+nav a{font-size:9px;letter-spacing:1px}
+.hero{min-height:100vh}
+.hero-image{background-position:60% center;opacity:.85}
+.hero-content{padding:130px 7%}
+h1{font-size:clamp(52px,12vw,75px);letter-spacing:-3px}
+.hero:before{top:30%;letter-spacing:-5px}
+.features{grid-template-columns:1fr;gap:45px}
+footer{flex-direction:column;gap:15px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOADING -->
-
 <div class="loader" id="loader">
-  <div class="wheel">
-    <div class="wheel-center"></div>
-  </div>
-  <div class="loader-logo">RAZ<span>CAR</span></div>
-  <div class="loader-text">ENGINE STARTING</div>
-  <div class="loading-line"></div>
+<div class="wheel">
+<div class="wheel-center"></div>
 </div>
-
-<!-- INTRO -->
+<div class="loader-logo">RAZ<span>CAR</span></div>
+<div class="loader-text">ENGINE STARTING</div>
+<div class="loading-line"></div>
+</div>
 
 <div class="intro" id="intro">
-  <h2>BUILD YOUR <span>OWN LEGEND.</span></h2>
-  <p>AUTOMOTIVE CULTURE · TECHNOLOGY · EXPERIENCE</p>
+<h2>BUILD YOUR <span>OWN LEGEND.</span></h2>
+<p>AUTOMOTIVE CULTURE · TECHNOLOGY · EXPERIENCE</p>
 </div>
 
-<!-- HEADER -->
-
 <header>
-  <div class="logo">RAZ<span>CAR</span>.AM</div>
-
-  <nav>
-    <a href="#cars">CARS</a>
-    <a href="#about">ABOUT</a>
-  </nav>
+<div class="logo">RAZ<span>CAR</span>.AM</div>
+<nav>
+<a href="#cars">CARS</a>
+<a href="#about">ABOUT</a>
+</nav>
 </header>
-
-<!-- MAIN -->
 
 <main>
 
 <section class="hero">
-  <div class="hero-image"></div>
-
-  <div class="hero-content">
-    <div class="eyebrow">
-      AUTOMOTIVE CULTURE · TECHNOLOGY · EXPERIENCE
-    </div>
-
-    <h1>
-      BUILD YOUR<br>
-      <span>OWN LEGEND.</span>
-    </h1>
-
-    <p class="description">
-      Discover the art of engineering.
-      Explore extraordinary machines,
-      automotive technology, design and performance.
-    </p>
-
-    <a href="#cars" class="explore">
-      EXPLORE RAZCAR ↗
-    </a>
-  </div>
+<div class="hero-image"></div>
+<div class="hero-content">
+<div class="eyebrow">AUTOMOTIVE CULTURE · TECHNOLOGY · EXPERIENCE</div>
+<h1>BUILD YOUR<br><span>OWN LEGEND.</span></h1>
+<p class="description">
+Discover the art of engineering.
+Explore extraordinary machines,
+automotive technology, design and performance.
+</p>
+<a href="#cars" class="explore">EXPLORE RAZCAR ↗</a>
+</div>
 </section>
 
 <section class="section" id="cars">
+<div class="section-label">THE WORLD OF AUTOMOTIVE</div>
+<h2>Beyond the machine.</h2>
+<div class="features">
 
-  <div class="section-label">THE WORLD OF AUTOMOTIVE</div>
+<div class="feature">
+<small>01 / STORIES</small>
+<h3>RAZCAR SHOW</h3>
+<p>Discover legendary cars, automotive stories and extraordinary engineering.</p>
+</div>
 
-  <h2>Beyond the machine.</h2>
+<div class="feature">
+<small>02 / SOUND</small>
+<h3>RAZCAR SOUND LAB</h3>
+<p>Explore engine character, sound and the emotions behind performance.</p>
+</div>
 
-  <div class="features">
+<div class="feature">
+<small>03 / TECHNOLOGY</small>
+<h3>RAZCAR INTELLIGENCE</h3>
+<p>Meet the future of automotive knowledge and intelligent technology.</p>
+</div>
 
-    <div class="feature">
-      <small>01 / STORIES</small>
-      <h3>RAZCAR SHOW</h3>
-      <p>
-        Discover legendary cars,
-        automotive stories and extraordinary engineering.
-      </p>
-    </div>
-
-    <div class="feature">
-      <small>02 / SOUND</small>
-      <h3>RAZCAR SOUND LAB</h3>
-      <p>
-        Explore engine character, sound
-        and the emotions behind performance.
-      </p>
-    </div>
-
-    <div class="feature">
-      <small>03 / TECHNOLOGY</small>
-      <h3>RAZCAR INTELLIGENCE</h3>
-      <p>
-        Meet the future of automotive knowledge
-        and intelligent technology.
-      </p>
-    </div>
-
-  </div>
+</div>
 </section>
 
 <section class="about" id="about">
-
-  <div class="section-label">OUR VISION</div>
-
-  <h2>More than just cars.</h2>
-
-  <p>
-    RazCar.am is an independent automotive platform
-    dedicated to engineering, innovation, design
-    and automotive culture.
-    Built for those who see more than a machine.
-  </p>
-
+<div class="section-label">OUR VISION</div>
+<h2>More than just cars.</h2>
+<p>
+RazCar.am is an independent automotive platform
+dedicated to engineering, innovation, design
+and automotive culture.
+Built for those who see more than a machine.
+</p>
 </section>
 
 </main>
 
 <footer>
-  <div>RAZCAR.AM © 2026</div>
-  <div>BUILD YOUR OWN LEGEND.</div>
+<div>RAZCAR.AM © 2026</div>
+<div>BUILD YOUR OWN LEGEND.</div>
 </footer>
 
 <script>
-window.addEventListener("load", function() {
+window.addEventListener("load",function(){
 
-  const loader = document.getElementById("loader");
-  const intro = document.getElementById("intro");
+const loader=document.getElementById("loader");
+const intro=document.getElementById("intro");
 
-  setTimeout(function() {
+setTimeout(function(){
 
-    loader.classList.add("hide");
+loader.classList.add("hide");
 
-    setTimeout(function() {
+setTimeout(function(){
 
-      intro.classList.add("show");
+intro.classList.add("show");
 
-      setTimeout(function() {
+setTimeout(function(){
 
-        intro.classList.add("hide");
+intro.classList.add("hide");
 
-      }, 1800);
+},1800);
 
-    }, 900);
+},900);
 
-  }, 1800);
+},1800);
 
 });
 </script>
 
 </body>
   </html>
-    
+  
