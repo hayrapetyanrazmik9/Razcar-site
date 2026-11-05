@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RazCar.am — Build Your Own Legend</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #111821;
+  color: #edf2f7;
+  font-family: Arial, sans-serif;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 7%;
+  border-bottom: 1px solid #394452;
+}
+.logo { font-size: 25px; font-weight: 900; letter-spacing: 2px; }
+.logo span { color: #168bff; }
+nav a {
+  color: #c5ced9;
+  text-decoration: none;
+  margin-left: 15px;
+  font-size: 13px;
+}
+.hero {
+  min-height: 75vh;
+  padding: 90px 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    linear-gradient(90deg,#111821 5%,#111821cc 60%,#11182155),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800")
+    center/cover;
+}
+.tag { color: #168bff; letter-spacing: 3px; font-size: 12px; }
+h1 { font-size: clamp(42px,8vw,82px); line-height: 1; }
+h1 span { color: #aebdce; }
+.hero p { color: #c4ced9; max-width: 480px; line-height: 1.7; }
+.button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 25px;
+  background: #168bff;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  width: fit-content;
+}
+section { padding: 60px 8%; }
+.card {
+  background: #202b38;
+  padding: 25px;
+  border: 1px solid #394452;
+  border-radius: 8px;
+  margin-top: 18px;
+}
+.card p { color: #b7c3d0; line-height: 1.6; }
+footer { padding: 30px 8%; color: #8291a2; border-top: 1px solid #394452; }
+@media(max-width:600px) {
+  header { padding: 18px 5%; }
+  nav a { margin-left: 8px; font-size: 11px; }
+  .hero { padding: 65px 7%; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">RAZ<span>CAR</span>.AM</div>
+  <nav>
+    <a href="#cars">CARS</a>
+    <a href="#about">ABOUT</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="tag">AUTOMOTIVE CULTURE · TECHNOLOGY · EXPERIENCE</div>
+    <h1>BUILD YOUR<br><span>OWN LEGEND.</span></h1>
+    <p>Discover the world of automobiles. Explore engineering, sound, design and automotive culture. Your journey starts here.</p>
+    <a class="button" href="#cars">EXPLORE RAZCAR</a>
+  </div>
+
+  <section id="cars">
+    <div class="tag">THE AUTOMOTIVE WORLD</div>
+    <h2>Explore the machines.</h2>
+    <div class="card">
+      <h2>RAZCAR SHOW</h2>
+      <p>Automotive stories and detailed presentations.</p>
+    </div>
+    <div class="card">
+      <h2>RAZCAR SOUND LAB</h2>
+      <p>Discover the character and sound of engines.</p>
+    </div>
+    <div class="card">
+      <h2>RAZCAR INTELLIGENCE</h2>
+      <p>Meet RHEA — your future automotive guide.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="tag">OUR VISION</div>
+    <h2>More than just cars.</h2>
+    <p>RazCar.am is an independent automotive project built to explore technology, engineering and automotive culture.</p>
+  </section>
+</main>
+
+<footer>RAZCAR.AM © 2026 · BUILD YOUR OWN LEGEND.</footer>
+</body>
+</html>
