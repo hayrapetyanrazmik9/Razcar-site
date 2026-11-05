@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAZCAR — Automotive Experience</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #111214;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* INTRO */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: #101113;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 1s ease, visibility 1s;
+}
+
+.intro.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.logo {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+
+.logo span {
+  color: #c83232;
+}
+
+.loader-line {
+  width: 170px;
+  height: 2px;
+  background: #333;
+  margin-top: 30px;
+  overflow: hidden;
+}
+
+.loader-line::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #bd3030;
+  transform: translateX(-100%);
+  animation: loading 2s ease forwards;
+}
+
+@keyframes loading {
+  to { transform: translateX(0); }
+}
+
+.intro p {
+  color: #777;
+  font-size: 9px;
+  letter-spacing: 4px;
+  margin-top: 18px;
+}
+
+/* MAIN */
+
+main {
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+main.visible {
+  opacity: 1;
+}
+
+header {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.brand span {
+  color: #c83232;
+}
+
+nav {
+  display: flex;
+  gap: 32px;
+}
+
+nav a {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 2px;
+  transition: color .3s;
+}
+
+nav a:hover {
+  color: white;
+}
+
+/* HERO */
+
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 65% 48%, #44464a 0%, #242629 35%, #111214 75%);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #111214 0%, transparent 65%),
+    linear-gradient(0deg, #111214 0%, transparent 35%);
+  z-index: 1;
+}
+
+.studio-light {
+  position: absolute;
+  width: 55%;
+  height: 55%;
+  top: 12%;
+  right: 5%;
+  background: radial-gradient(ellipse, #77777722, transparent 70%);
+  filter: blur(20px);
+}
+
+.car-image {
+  position: absolute;
+  width: 78%;
+  height: 70%;
+  right: 0;
+  top: 18%;
+  background-image: url("gemera.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: camera 14s ease-in-out infinite alternate;
+  filter: drop-shadow(0 30px 35px #0009);
+}
+
+@keyframes camera {
+  from { transform: scale(1) translateX(1%); }
+  to { transform: scale(1.07) translateX(-2%); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding-left: 9%;
+  padding-top: 70px;
+}
+
+.eyebrow {
+  color: #c83232;
+  font-size: 10px;
+  letter-spacing: 5px;
+  margin-bottom: 22px;
+}
+
+h1 {
+  font-size: clamp(48px, 8vw, 100px);
+  line-height: .95;
+  letter-spacing: -5px;
+  font-weight: 900;
+}
+
+.hero-content p {
+  margin-top: 25px;
+  color: #aaa;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.explore {
+  display: inline-block;
+  margin-top: 42px;
+  padding: 15px 28px;
+  border: 1px solid #777;
+  color: white;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 3px;
+  transition: .3s;
+}
+
+.explore:hover {
+  background: white;
+  color: #111;
+  border-color: white;
+}
+
+.scroll {
+  position: absolute;
+  z-index: 2;
+  bottom: 35px;
+  left: 9%;
+  color: #777;
+  font-size: 9px;
+  letter-spacing: 4px;
+}
+
+.side-number {
+  position: absolute;
+  right: 5%;
+  bottom: 35px;
+  z-index: 2;
+  color: #888;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+/* NEXT SECTION */
+
+.garage {
+  min-height: 70vh;
+  padding: 120px 9%;
+  background: #191a1c;
+}
+
+.garage h2 {
+  font-size: clamp(35px, 6vw, 65px);
+  letter-spacing: -2px;
+}
+
+.garage p {
+  color: #999;
+  margin-top: 20px;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+footer {
+  padding: 30px 9%;
+  background: #101113;
+  color: #666;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+@media(max-width: 700px) {
+  header {
+    padding: 23px 6%;
+  }
+
+  .brand { font-size: 21px; }
+
+  nav { gap: 12px; }
+
+  nav a {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .hero {
+    min-height: 100svh;
+    align-items: flex-end;
+    padding-bottom: 145px;
+  }
+
+  .car-image {
+    width: 100%;
+    height: 48%;
+    top: 18%;
+    right: -5%;
+  }
+
+  .hero-content {
+    padding-left: 7%;
+    padding-top: 0;
+  }
+
+  h1 {
+    font-size: 54px;
+    letter-spacing: -3px;
+  }
+
+  .scroll { left: 7%; }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="intro" id="intro">
+  <div class="logo"><span>RAZ</span>CAR</div>
+  <div class="loader-line"></div>
+  <p>BUILD YOUR OWN LEGEND</p>
+</div>
+
+<main id="main">
+
+<header>
+  <div class="brand"><span>RAZ</span>CAR</div>
+  <nav>
+    <a href="#home">HOME</a>
+    <a href="#garage">GARAGE</a>
+    <a href="#about">ABOUT</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="studio-light"></div>
+  <div class="car-image"></div>
+
+  <div class="hero-content">
+    <div class="eyebrow">AUTOMOTIVE EXPERIENCE</div>
+    <h1>BEYOND<br>THE DRIVE.</h1>
+    <p>DISCOVER A DIFFERENT WORLD.</p>
+    <a href="#garage" class="explore">EXPLORE RAZCAR</a>
+  </div>
+
+  <div class="scroll">SCROLL TO EXPLORE ↓</div>
+  <div class="side-number">01 / 04</div>
+</section>
+
+<section class="garage" id="garage">
+  <div class="eyebrow">THE AUTOMOTIVE WORLD</div>
+  <h2>VIRTUAL GARAGE.</h2>
+  <p>A NEW WAY TO EXPERIENCE AUTOMOBILES.</p>
+</section>
+
+<footer id="about">
+  RAZCAR.AM — BUILD YOUR OWN LEGEND.
+</footer>
+
+</main>
+
+<script>
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("intro").classList.add("hide");
+    document.getElementById("main").classList.add("visible");
+  }, 2300);
+});
+</script>
+
+</body>
+  </html>
+  
