@@ -4,20 +4,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAZCAR — Automotive Experience</title>
+<meta name="theme-color" content="#101113">
+<title>RAZCAR — Build Your Own Legend</title>
 
 <style>
+:root {
+  --bg: #101113;
+  --panel: #17191c;
+  --white: #f4f4f2;
+  --muted: #929397;
+  --red: #c52e32;
+  --line: rgba(255,255,255,.13);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: #111214;
-  color: #fff;
+  background: var(--bg);
+  color: var(--white);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
 }
 
 /* INTRO */
@@ -25,102 +48,146 @@ body {
 .intro {
   position: fixed;
   inset: 0;
-  z-index: 10;
-  background: #101113;
+  z-index: 1000;
+  background: #090a0b;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  transition: opacity 1s ease, visibility 1s;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: opacity 1.2s ease, visibility 1.2s ease;
 }
 
 .intro.hide {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
 }
 
-.logo {
-  font-size: 38px;
+.intro-car {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #090a0b 0%, rgba(9,10,11,.5) 50%, #090a0b 100%),
+    linear-gradient(0deg, #090a0b 0%, transparent 60%),
+    url("gemera.jpg") center 58% / cover no-repeat;
+  opacity: 0;
+  transform: scale(1.12);
+  animation: introCar 4.8s ease forwards;
+}
+
+.intro-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  animation: logoReveal 1.5s ease both;
+}
+
+.intro-logo {
+  font-size: clamp(38px, 8vw, 76px);
   font-weight: 900;
+  letter-spacing: 12px;
+}
+
+.intro-logo span {
+  color: var(--red);
+}
+
+.intro-subtitle {
+  margin-top: 17px;
+  font-size: 9px;
   letter-spacing: 5px;
+  color: #aaa;
 }
 
-.logo span {
-  color: #c83232;
-}
-
-.loader-line {
-  width: 170px;
+.loader {
+  width: 190px;
   height: 2px;
-  background: #333;
-  margin-top: 30px;
+  margin: 38px auto 0;
+  background: rgba(255,255,255,.18);
   overflow: hidden;
 }
 
-.loader-line::after {
+.loader::after {
   content: "";
   display: block;
-  width: 100%;
   height: 100%;
-  background: #bd3030;
+  width: 100%;
+  background: var(--red);
   transform: translateX(-100%);
-  animation: loading 2s ease forwards;
+  animation: loadLine 4s ease forwards;
 }
 
-@keyframes loading {
+.skip {
+  position: absolute;
+  bottom: 45px;
+  right: 6%;
+  z-index: 3;
+  background: transparent;
+  color: #aaa;
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 12px 20px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.skip:hover {
+  color: white;
+  border-color: var(--red);
+}
+
+@keyframes loadLine {
   to { transform: translateX(0); }
 }
 
-.intro p {
-  color: #777;
-  font-size: 9px;
-  letter-spacing: 4px;
-  margin-top: 18px;
+@keyframes logoReveal {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* MAIN */
-
-main {
-  opacity: 0;
-  transition: opacity 1.5s ease;
+@keyframes introCar {
+  0% { opacity: 0; transform: scale(1.12); }
+  35% { opacity: .65; }
+  100% { opacity: .85; transform: scale(1); }
 }
 
-main.visible {
-  opacity: 1;
-}
+/* HEADER */
 
 header {
   position: absolute;
-  z-index: 3;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 30px 6%;
+  z-index: 20;
+  padding: 28px 6%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
 .brand {
   font-size: 25px;
   font-weight: 900;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
 }
 
 .brand span {
-  color: #c83232;
+  color: var(--red);
 }
 
 nav {
   display: flex;
-  gap: 32px;
+  align-items: center;
+  gap: 38px;
 }
 
 nav a {
-  color: #aaa;
-  text-decoration: none;
   font-size: 10px;
   letter-spacing: 2px;
+  color: #c4c4c4;
   transition: color .3s;
 }
 
@@ -128,194 +195,399 @@ nav a:hover {
   color: white;
 }
 
+.header-mark {
+  color: var(--red);
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
 /* HERO */
 
 .hero {
-  min-height: 100vh;
   position: relative;
+  min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  padding: 0 7% 10%;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 65% 48%, #44464a 0%, #242629 35%, #111214 75%);
+  background: #151719;
 }
 
-.hero::before {
-  content: "";
+.hero-image {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, #111214 0%, transparent 65%),
-    linear-gradient(0deg, #111214 0%, transparent 35%);
-  z-index: 1;
+    linear-gradient(90deg, rgba(10,11,12,.85), transparent 75%),
+    linear-gradient(0deg, #101113 0%, transparent 42%),
+    url("gemera.jpg") center 55% / cover no-repeat;
+  transform: scale(1.04);
+  animation: cameraMove 18s ease-in-out infinite alternate;
 }
 
-.studio-light {
-  position: absolute;
-  width: 55%;
-  height: 55%;
-  top: 12%;
-  right: 5%;
-  background: radial-gradient(ellipse, #77777722, transparent 70%);
-  filter: blur(20px);
-}
-
-.car-image {
-  position: absolute;
-  width: 78%;
-  height: 70%;
-  right: 0;
-  top: 18%;
-  background-image: url("gemera.jpg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  animation: camera 14s ease-in-out infinite alternate;
-  filter: drop-shadow(0 30px 35px #0009);
-}
-
-@keyframes camera {
-  from { transform: scale(1) translateX(1%); }
-  to { transform: scale(1.07) translateX(-2%); }
+@keyframes cameraMove {
+  from { transform: scale(1.04); }
+  to { transform: scale(1.13); }
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  padding-left: 9%;
-  padding-top: 70px;
+  max-width: 750px;
+  animation: heroReveal 1.5s 4.2s both;
+}
+
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(35px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .eyebrow {
-  color: #c83232;
+  color: #d5d5d5;
   font-size: 10px;
   letter-spacing: 5px;
-  margin-bottom: 22px;
+  margin-bottom: 25px;
 }
 
-h1 {
-  font-size: clamp(48px, 8vw, 100px);
-  line-height: .95;
-  letter-spacing: -5px;
+.hero h1 {
+  font-size: clamp(48px, 9vw, 112px);
+  line-height: .92;
   font-weight: 900;
+  letter-spacing: -5px;
 }
 
-.hero-content p {
-  margin-top: 25px;
-  color: #aaa;
-  font-size: 12px;
-  letter-spacing: 3px;
+.hero h1 span {
+  color: var(--red);
 }
 
-.explore {
-  display: inline-block;
-  margin-top: 42px;
-  padding: 15px 28px;
-  border: 1px solid #777;
-  color: white;
-  text-decoration: none;
+.hero-description {
+  max-width: 390px;
+  margin-top: 30px;
+  color: #b7b7b7;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.hero-bottom {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  margin-top: 38px;
+}
+
+.primary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 25px;
+  padding: 17px 23px;
+  background: var(--red);
   font-size: 10px;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   transition: .3s;
 }
 
-.explore:hover {
-  background: white;
-  color: #111;
-  border-color: white;
+.primary-link:hover {
+  background: #e13b40;
+  transform: translateY(-3px);
 }
 
-.scroll {
-  position: absolute;
-  z-index: 2;
-  bottom: 35px;
-  left: 9%;
-  color: #777;
-  font-size: 9px;
-  letter-spacing: 4px;
-}
-
-.side-number {
-  position: absolute;
-  right: 5%;
-  bottom: 35px;
-  z-index: 2;
+.hero-index {
   color: #888;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+/* COMMON SECTIONS */
+
+section:not(.hero) {
+  padding: 115px 7%;
+}
+
+.section-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: 55px;
+}
+
+.section-label {
+  color: var(--red);
+  font-size: 10px;
+  letter-spacing: 4px;
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-size: clamp(32px, 5vw, 62px);
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.section-note {
+  max-width: 300px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* CULTURE */
+
+.culture {
+  background: #101113;
+}
+
+.culture-grid {
+  display: grid;
+  grid-template-columns: 1.25fr .75fr;
+  gap: 25px;
+}
+
+.culture-image {
+  min-height: 430px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(0deg, rgba(0,0,0,.7), transparent 70%),
+    url("gemera.jpg") center / cover no-repeat;
+}
+
+.culture-image::after {
+  content: "01 / AUTOMOTIVE CULTURE";
+  position: absolute;
+  bottom: 28px;
+  left: 30px;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.culture-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 35px;
+  background: var(--panel);
+}
+
+.culture-copy h3 {
+  font-size: 30px;
+  line-height: 1.2;
+  margin-bottom: 22px;
+}
+
+.culture-copy p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2;
+}
+
+/* TECHNOLOGY */
+
+.technology {
+  background: #17191c;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.tech-item {
+  min-height: 220px;
+  padding: 32px;
+  background: #17191c;
+  transition: background .35s;
+}
+
+.tech-item:hover {
+  background: #202226;
+}
+
+.tech-number {
+  color: var(--red);
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.tech-item h3 {
+  margin-top: 55px;
+  font-size: 21px;
+}
+
+.tech-item p {
+  margin-top: 13px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* GARAGE */
+
+.garage {
+  background: #101113;
+}
+
+.garage-feature {
+  position: relative;
+  min-height: 470px;
+  display: flex;
+  align-items: flex-end;
+  padding: 45px;
+  overflow: hidden;
+  background:
+    linear-gradient(0deg, rgba(0,0,0,.85), transparent 75%),
+    url("gemera.jpg") center / cover no-repeat;
+  transition: background-size .5s;
+}
+
+.garage-feature h3 {
+  font-size: clamp(32px, 6vw, 65px);
+  letter-spacing: -2px;
+}
+
+.garage-feature p {
+  margin-top: 12px;
+  color: #c2c2c2;
   font-size: 11px;
   letter-spacing: 3px;
 }
 
-/* NEXT SECTION */
-
-.garage {
-  min-height: 70vh;
-  padding: 120px 9%;
-  background: #191a1c;
-}
-
-.garage h2 {
-  font-size: clamp(35px, 6vw, 65px);
-  letter-spacing: -2px;
-}
-
-.garage p {
-  color: #999;
-  margin-top: 20px;
-  font-size: 13px;
-  letter-spacing: 2px;
-}
+/* FOOTER */
 
 footer {
-  padding: 30px 9%;
-  background: #101113;
-  color: #666;
+  padding: 55px 7%;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.footer-logo {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 4px;
+}
+
+.footer-logo span {
+  color: var(--red);
+}
+
+footer p {
+  color: #777;
   font-size: 10px;
   letter-spacing: 2px;
 }
 
-@media(max-width: 700px) {
+/* REVEAL */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* MOBILE */
+
+@media(max-width: 750px) {
   header {
-    padding: 23px 6%;
+    padding: 22px 5%;
   }
 
-  .brand { font-size: 21px; }
+  .brand {
+    font-size: 19px;
+  }
 
-  nav { gap: 12px; }
+  nav {
+    gap: 13px;
+  }
 
   nav a {
     font-size: 8px;
     letter-spacing: 1px;
   }
 
+  .header-mark {
+    display: none;
+  }
+
   .hero {
-    min-height: 100svh;
-    align-items: flex-end;
-    padding-bottom: 145px;
+    min-height: 90vh;
+    padding: 0 6% 15%;
   }
 
-  .car-image {
-    width: 100%;
-    height: 48%;
-    top: 18%;
-    right: -5%;
+  .hero-image {
+    background-position: 58% center;
   }
 
-  .hero-content {
-    padding-left: 7%;
-    padding-top: 0;
+  .hero h1 {
+    letter-spacing: -2px;
   }
 
-  h1 {
-    font-size: 54px;
-    letter-spacing: -3px;
+  .hero-description {
+    max-width: 310px;
   }
 
-  .scroll { left: 7%; }
+  section:not(.hero) {
+    padding: 75px 6%;
+  }
+
+  .section-top {
+    display: block;
+    margin-bottom: 35px;
+  }
+
+  .section-note {
+    margin-top: 20px;
+  }
+
+  .culture-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .culture-image {
+    min-height: 280px;
+  }
+
+  .culture-copy {
+    padding: 28px;
+  }
+
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-item {
+    min-height: 175px;
+  }
+
+  .tech-item h3 {
+    margin-top: 30px;
+  }
+
+  .garage-feature {
+    min-height: 330px;
+    padding: 25px;
+  }
+
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 @media(prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 </style>
@@ -323,59 +595,191 @@ footer {
 
 <body>
 
+<!-- CINEMATIC INTRO -->
+
 <div class="intro" id="intro">
-  <div class="logo"><span>RAZ</span>CAR</div>
-  <div class="loader-line"></div>
-  <p>BUILD YOUR OWN LEGEND</p>
-</div>
+  <div class="intro-car"></div>
 
-<main id="main">
-
-<header>
-  <div class="brand"><span>RAZ</span>CAR</div>
-  <nav>
-    <a href="#home">HOME</a>
-    <a href="#garage">GARAGE</a>
-    <a href="#about">ABOUT</a>
-  </nav>
-</header>
-
-<section class="hero" id="home">
-  <div class="studio-light"></div>
-  <div class="car-image"></div>
-
-  <div class="hero-content">
-    <div class="eyebrow">AUTOMOTIVE EXPERIENCE</div>
-    <h1>BEYOND<br>THE DRIVE.</h1>
-    <p>DISCOVER A DIFFERENT WORLD.</p>
-    <a href="#garage" class="explore">EXPLORE RAZCAR</a>
+  <div class="intro-content">
+    <div class="intro-logo">RAZ<span>CAR</span></div>
+    <div class="intro-subtitle">BUILD YOUR OWN LEGEND</div>
+    <div class="loader"></div>
   </div>
 
-  <div class="scroll">SCROLL TO EXPLORE ↓</div>
-  <div class="side-number">01 / 04</div>
+  <button class="skip" id="skipIntro">SKIP INTRO ↗</button>
+</div>
+
+<!-- HEADER -->
+
+<header>
+  <a href="#home" class="brand">RAZ<span>CAR</span></a>
+
+  <nav>
+    <a href="#home">HOME</a>
+    <a href="#culture">CULTURE</a>
+    <a href="#technology">TECHNOLOGY</a>
+    <a href="#garage">GARAGE</a>
+  </nav>
+
+  <div class="header-mark">AM / 01</div>
+</header>
+
+<!-- HERO -->
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-image"></div>
+
+  <div class="hero-content">
+    <div class="eyebrow">AUTOMOTIVE CULTURE · TECHNOLOGY · EXPERIENCE</div>
+
+    <h1>BEYOND<br>THE <span>DRIVE.</span></h1>
+
+    <p class="hero-description">
+      More than machines. More than speed.
+      A world built around automotive culture,
+      engineering and the passion for movement.
+    </p>
+
+    <div class="hero-bottom">
+      <a href="#culture" class="primary-link">
+        EXPLORE RAZCAR <span>↗</span>
+      </a>
+
+      <div class="hero-index">EST. 2026 — ARMENIA</div>
+    </div>
+  </div>
 </section>
+
+<!-- CULTURE -->
+
+<section class="culture" id="culture">
+  <div class="section-top reveal">
+    <div>
+      <div class="section-label">01 / THE CULTURE</div>
+      <h2 class="section-title">AUTOMOTIVE<br>CULTURE.</h2>
+    </div>
+
+    <p class="section-note">
+      Discover the stories, machines and people
+      that shape the automotive world.
+    </p>
+  </div>
+
+  <div class="culture-grid reveal">
+    <div class="culture-image"></div>
+
+    <div class="culture-copy">
+      <h3>IT'S NOT JUST ABOUT THE CAR.</h3>
+      <p>
+        Every machine has a story.
+        Every generation creates legends.
+        RazCar explores the culture, design
+        and engineering behind the world's
+        most fascinating automobiles.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY -->
+
+<section class="technology" id="technology">
+  <div class="section-top reveal">
+    <div>
+      <div class="section-label">02 / ENGINEERING</div>
+      <h2 class="section-title">BUILT ON<br>INNOVATION.</h2>
+    </div>
+
+    <p class="section-note">
+      Technology changes the way we move.
+      Engineering defines what comes next.
+    </p>
+  </div>
+
+  <div class="tech-grid reveal">
+    <article class="tech-item">
+      <div class="tech-number">01 / POWER</div>
+      <h3>PERFORMANCE</h3>
+      <p>Engines, powertrains and the science of speed.</p>
+    </article>
+
+    <article class="tech-item">
+      <div class="tech-number">02 / DESIGN</div>
+      <h3>ENGINEERING</h3>
+      <p>Materials, aerodynamics and intelligent design.</p>
+    </article>
+
+    <article class="tech-item">
+      <div class="tech-number">03 / FUTURE</div>
+      <h3>INNOVATION</h3>
+      <p>New ideas shaping the next generation of mobility.</p>
+    </article>
+  </div>
+</section>
+
+<!-- VIRTUAL GARAGE -->
 
 <section class="garage" id="garage">
-  <div class="eyebrow">THE AUTOMOTIVE WORLD</div>
-  <h2>VIRTUAL GARAGE.</h2>
-  <p>A NEW WAY TO EXPERIENCE AUTOMOBILES.</p>
+  <div class="section-top reveal">
+    <div>
+      <div class="section-label">03 / THE COLLECTION</div>
+      <h2 class="section-title">VIRTUAL<br>GARAGE.</h2>
+    </div>
+
+    <p class="section-note">
+      A space dedicated to extraordinary machines
+      and automotive icons.
+    </p>
+  </div>
+
+  <div class="garage-feature reveal">
+    <div>
+      <div class="section-label">FEATURED MACHINE / 001</div>
+      <h3>KOENIGSEGG<br>GEMERA</h3>
+      <p>SWEDISH ENGINEERING · MEGACAR</p>
+    </div>
+  </div>
 </section>
-
-<footer id="about">
-  RAZCAR.AM — BUILD YOUR OWN LEGEND.
-</footer>
-
 </main>
 
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-logo">RAZ<span>CAR</span></div>
+  <p>BUILD YOUR OWN LEGEND.</p>
+  <p>© 2026 RAZCAR.AM</p>
+</footer>
+
 <script>
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("intro").classList.add("hide");
-    document.getElementById("main").classList.add("visible");
-  }, 2300);
+const intro = document.getElementById("intro");
+const skip = document.getElementById("skipIntro");
+
+function closeIntro() {
+  intro.classList.add("hide");
+}
+
+const introTimer = setTimeout(closeIntro, 4800);
+
+skip.addEventListener("click", () => {
+  clearTimeout(introTimer);
+  closeIntro();
+});
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll(".reveal").forEach(element => {
+  revealObserver.observe(element);
 });
 </script>
 
 </body>
   </html>
-<!-- RazCar preview -->  
+                                                             
